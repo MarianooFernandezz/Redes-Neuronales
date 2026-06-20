@@ -1,3 +1,5 @@
+# Trabajo Práctico Final - Matemática III
+
 **Integrantes:**
 * Fernandez Mariano
 * Moro Martín
@@ -80,3 +82,46 @@ def remove_outliers(df, columns):
 
 # Eliminar outliers
 df = remove_outliers(df, numeric_columns)
+```
+
+### 5. Transformaciones Preliminares
+* **Normalización:** Se estandarizaron los datos para asegurar que la red neuronal procese rangos de valores similares, mejorando la velocidad de convergencia y el aprendizaje.
+* **Codificación:** Se codificaron a formato numérico variables categóricas.
+* *Nota:* No fue necesaria la eliminación de valores nulos ya que el dataset estaba íntegro.
+
+---
+
+## Parte 2: Desarrollo de la Red Neuronal
+
+### 1. Arquitectura de la Red
+* **Capas y Neuronas:** La red consta de una capa de entrada (11 variables), una **capa oculta (9 neuronas)** y una **capa de salida (1 neurona)**.
+* **Funciones de Activación:**
+  * *Capa Oculta:* **ReLU**, elegida por su alta velocidad de convergencia y bajo costo computacional.
+  * *Capa de Salida:* **Logística (Sigmoide)**, ideal para clasificación binaria, donde salidas $\ge 0.5$ indican alto riesgo de infarto.
+
+### 2. Análisis de Overfitting (Sobreajuste)
+Evaluando los gráficos de precisión (Accuracy) para entrenamiento y testeo, **el modelo final no presenta overfitting**. Durante el desarrollo sí se experimentó este problema (curvas separándose), el cual se solucionó calibrando:
+* La cantidad de iteraciones (steps).
+* La tasa de aprendizaje (learning rate).
+* La cantidad de neuronas en la capa oculta.
+
+---
+
+## Parte 3: Comparación con `scikit-learn`
+
+Al comparar la red neuronal implementada analíticamente en `numpy` frente a la herramienta estándar `scikit-learn`, destacaron los siguientes aspectos:
+* **Similitudes:** Tras un ajuste adecuado, la implementación manual logró resultados de precisión muy parecidos a los entregados por `scikit-learn`.
+* **Diferencias:** La versión de `scikit-learn` está altamente optimizada, por lo que logra converger utilizando muchas menos iteraciones y en menor tiempo de ejecución.
+
+---
+
+## Parte 4: Conclusiones Finales
+
+El ejercicio de construir la red desde cero consolidó el entendimiento estructural y matemático subyacente al Deep Learning (multiplicación matricial, funciones de costo, descenso de gradiente y propagación).
+
+| Método | Ventajas | Desventajas |
+| :--- | :--- | :--- |
+| **Manual (NumPy)** | Control absoluto del código y los parámetros. Facilidad para graficar paso a paso y evaluar el *overfitting* de forma transparente. | Alta complejidad; mayor propensión a errores lógicos (bugs) y un tiempo de ejecución considerablemente más largo. |
+| **`scikit-learn`** | Código breve, sencillo, rápido y muy optimizado. | Opera como "caja negra" (menor visibilidad del proceso) y no provee herramientas integradas fáciles para graficar curvas de aprendizaje paso a paso. |
+
+**Reflexión:** Ambas metodologías son altamente complementarias. Las implementaciones manuales brindan bases sólidas de conocimiento, mientras que herramientas como `scikit-learn` potencian la eficiencia requerida para producción.
