@@ -1,5 +1,3 @@
-md_content = """# Trabajo Práctico Final - Matemática III
-
 **Integrantes:**
 * Fernandez Mariano
 * Moro Martín
